@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-
+from collections import OrderedDict
 import requests
 from lxml import etree
 import requests
@@ -20,7 +20,7 @@ def get_metro_line_map():
     res.encoding = res.apparent_encoding
     html = res.text
     Html = etree.HTML(html)
-    print(etree.tostring(Html, encoding="unicode"))
+    # print(etree.tostring(Html, encoding="unicode"))
     # div中取城市列表
     res1 = Html.xpath('/html/body/div[1]/div[1]/div[1]/div[2]/div[1]/a')
     res2 = Html.xpath('/html/body/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/a')
@@ -64,8 +64,9 @@ def get_message(ID, cityNamePinYin, cityName):  # 用于得到城市的具体线
                 data_list.append(data_json)
             else:
                 data_list.append(data_json)
-    f = open(cityName + '.json', "a+")
-    json.dump(data_list, f, ensure_ascii=False)
+    f = open("data/" + cityName + '.json', "a+")
+    # 去重
+    json.dump(list(OrderedDict((tuple(d.items()), d) for d in data_list).values()), f, ensure_ascii=False)
     print(cityName + '地铁站点爬取结束')
     f.close()
 

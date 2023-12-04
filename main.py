@@ -33,10 +33,10 @@ if __name__ == '__main__':
             v_matrix[i].append(line_manager.get_best_route(stations[i].name, stations[j].name, same_lines))
 
     # start_station = input("起始站\n")
-    start_station = '滨和路'
+    start_station = '火车东站'
     start_index = station_index[start_station]
     # terminal_station = input("终点站\n")
-    terminal_station = '海创园'
+    terminal_station = '火车南站'
     terminal_index = station_index[terminal_station]
 
     print("Calculating using Dijkstra")
@@ -59,7 +59,7 @@ if __name__ == '__main__':
                 min = (dis[j][0], dis[j][1])
                 u = j
         book[u] = 1
-
+        ##  中转损失
         bias = 1
 
         for v in range(0, n - 1):
